@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymleaf.org">
+<head th:replace="~{layout :: head}"></head>
+<body class="main-body">
+<div th:replace="~{layout :: nav-bar(AddProduct)}"></div>
+<div class="main-wrapper">
+
+    <form class="upsert-form" method="post" th:action="@{/merchandise/upsert}" th:object="${dto}">
+        <input type="hidden" th:field="*{id}">
+        <table class="form-table">
+            <tbody>
+            <tr>
+                <td>
+                    <label>Name</label>
+                </td>
+                <td>
+                    <input type="text" th:field="*{name}">
+                    <div th:errors="*{name}" class="field-validation-error"></div>
+
+                </td>
+            </tr>
+            <input type="hidden" name="sellerId" th:value="${sellerId}">
+            <tr>
+                <td>
+                    <label>Category</label>
+                </td>
+                <td>
+                    <input type="text" th:field="*{category}">
+                    <div th:errors="*{category}" class="field-validation-error"></div>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="textarea-label" >
+                    <label>Description</label>
+                </td>
+                <td>
+                    <textarea th:field="*{description}"></textarea>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td>
+                    <label>Price</label>
+                </td>
+                <td>
+                    <input type="number" th:field="*{price}">
+                    <div th:errors="*{price}" class="field-validation-error"></div>
+                </td>
+            </tr>
+
+            <tr th:unless="*{discontinue != null}">
+                <td>
+                    <label >Discontinue</label>
+                </td>
+                <td>
+                    <input type="checkbox" th:field="*{discontinue}"  name="discontinue" th:value="true">
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
+        <button type="submit" class="blue-button">Save</button>
+    </form>
+</div>
+<footer th:replace="~{layout :: footer}">
+</footer>
+</body>
+</html>

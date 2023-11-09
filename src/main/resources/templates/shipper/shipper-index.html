@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymleaf.org">
+<head th:replace="~{layout :: head}"></head>
+<body class="main-body">
+<div th:replace="~{layout :: nav-bar(Shipment)}"></div>
+
+<div class="main-wrapper">
+
+    <div class="create-container">
+        <a href="javascript:;" class="create-button">
+            <i class="fas fa-plus-circle"></i> Add new Shipment</a>
+    </div>
+    <table>
+        <thead>
+        <tr>
+            <th>Action</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Service</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="row: ${grid}" th:object="${row}">
+            <td class="shipper-button ">
+                <a href="javascript:;"  th:attr="data-id=*{id}" class="edit-button" ><i class="fas fa-edit"></i> Edit</a>
+                <a th:href="@{/shipper/delete(id=*{id})}"  class="delete-button "><i class="fas fa-eraser"></i> Delete</a>
+                <a th:if="*{service == 'Yes'}" th:href="@{/shipper/stopService(id=*{id})}" class="books-button"><i class="fas fa-shipping-fast"></i> Stop Service</a>
+            </td>
+            <td th:text="*{name}"></td>
+            <td th:text="*{#numbers.formatCurrency(price)}"></td>
+            <td th:text="*{service}"></td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+            <td colspan="4">
+                <div class="pagination">
+                    <div th:text="|page ${currentPage} of ${totalPages}|"></div>
+                    <div th:if="${totalPages != 0}">
+                        <a th:each="number : ${#numbers.sequence(1,totalPages)}"
+                           th:text="${number}"
+                           th:href="@{/shipper/index(page=${number})}"></a>
+                    </div>
+                    <div th:unless="${totalPages != 0}">
+                        Data not found!
+                    </div>
+                </div>
+            </td>
+        </tr>
+        </tfoot>
+    </table>
+</div>
+<footer th:replace="~{layout :: footer}">
+</footer>
+<div class="modal-layer">
+    <th:block th:replace="~{shipper/shipper-popup-form :: formDialog}" ></th:block>
+<!--    <th:block th:replace="~{book/book-delete-popup :: deleteDialog}" ></th:block>-->
+</div>
+<script th:src="@{/resources/js/shipper/shipper-popup.js}">
+</script>
+</body>
+</html>

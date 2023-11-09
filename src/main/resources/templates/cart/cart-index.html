@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymleaf.org">
+<head th:replace="~{layout :: head}"></head>
+<body class="main-body">
+<div th:replace="~{layout :: nav-bar(MyCart)}"></div>
+
+<div class="main-wrapper">
+
+    <div class="create-container">
+        <a th:href="@{/cart/purchase}"  class="create-button">
+        <i class="fas fa-plus-circle"></i>Purchase All</a>
+    </div>
+    <div th:unless="${saldoError}">
+        <p class="field-validation-error" th:text="'Insufficient Funds!'"></p>
+    </div>
+    <table>
+        <thead>
+        <tr>
+            <th>Action</th>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Shipment</th>
+            <th>Seller</th>
+            <th>Total Price</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="row: ${grid}" th:object="${row}">
+            <td class="merchandise-button ">
+                <a th:href="@{/cart/delete(id=*{id})}"  class="delete-button"><i class="fas fa-eraser"></i> Remove</a>
+
+            </td>
+            <td th:text="*{product}"></td>
+            <td th:text="*{quantity}"></td>
+            <td th:text="*{shipper}"></td>
+            <td th:text="*{seller}"></td>
+            <td th:text="*{#numbers.formatCurrency(totalPrice)}"></td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+            <td colspan="6">
+                <div class="pagination">
+                    <div th:text="|page ${currentPage} of ${totalPages}|"></div>
+                    <div th:if="${totalPages != 0}">
+                        <a th:each="number : ${#numbers.sequence(1,totalPages)}"
+                           th:text="${number}"
+                           th:href="@{/cart/index(page=${number})}"></a>
+                    </div>
+                    <div th:unless="${totalPages != 0}">
+                        Data not found!
+                    </div>
+                </div>
+            </td>
+        </tr>
+        </tfoot>
+    </table>
+</div>
+<footer th:replace="~{layout :: footer}">
+</footer>
+<div class="modal-layer">
+    <th:block th:replace="~{merchandise/merchandise-popup-detail :: detailDialog}" ></th:block>
+</div>
+<script th:src="@{/resources/js/merchandise/merchandise-popup.js}">
+</script>
+</body>
+</html>

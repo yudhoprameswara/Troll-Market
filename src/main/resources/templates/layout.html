@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymleaf.org">
+
+<head th:fragment="head">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Troll Marketplace</title>
+    <link rel="icon" type="image/ico" th:href="@{/favicon.ico}">
+    <link rel="stylesheet" th:href="@{/resources/css/normalize.css}">
+    <link rel="stylesheet" th:href="@{/resources/css/font-awesome.css}">
+    <link rel="stylesheet" th:href="@{/resources/css/site.css}">
+    <link rel="stylesheet" th:href="@{/resources/css/authorization.css}">
+    <script th:src="@{/resources/js/jquery-3.6.0.js}"></script>
+    <script th:src="@{/resources/js/site.js}" defer></script>
+</head>
+<body>
+<header th:fragment="account-header" class="company-logo">
+    <img th:src="@{/resources/image/logo.png}" alt="TrollMarket">
+    <h1>
+        Troll <span class="bold">Marketplace</span>
+    </h1>
+</header>
+<div th:fragment="nav-bar(breadCrumbs)">
+    <header class="header-layout">
+        <div>
+            <h1>Troll Market</h1>
+        </div>
+        <div class="user-wrapper">
+            <div class="user">
+                <span>Welcome, </span>
+                <div class="full-name" th:text="${#authentication.getPrincipal().getUsername()}" >anonymous</div>
+            </div>
+            <div class="sign-out">
+                <form th:action="@{/logout}" method="post">
+                    <button class="sign-out-button" type="submit">Sign Out
+                        <i class="fas fa-door-open"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </header>
+    <nav class="upper-navbar"  th:data-role="${#authentication.getAuthorities()}">
+        <a th:href="@{/}">Home</a>
+        <a class="profile-menu"  th:href="@{/profile/index}">Profile</a>
+        <a class="shop-menu" th:href="@{/shop/index}">Shop</a>
+        <a class="merchandise-menu" th:href="@{/merchandise/index}">Merchandise</a>
+        <a class="shipment-menu" th:href="@{/shipper/index}">Shipment</a>
+        <a class="cart-menu" th:href="@{/cart/index}">My Cart</a>
+        <a class="admin-menu" th:href="@{/admin/index}">Admin</a>
+        <a class="history-menu" th:href="@{/history/index}">History</a>
+    </nav>
+    <div class="bread-crumbs" th:text="${breadCrumbs}">Menu</div>
+</div>
+
+<main>
+
+</main>
+<footer th:fragment="~{layout :: footer}">
+    Copyrights &copy; 2023
+    <span> Yudho Prameswara</span>
+     All rights reserved.
+</footer>
+</body>
+</html>

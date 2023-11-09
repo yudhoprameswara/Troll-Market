@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymleaf.org">
+<head th:replace="~{layout :: head}"></head>
+<body class="main-body">
+<div th:replace="~{layout :: nav-bar(History)}"></div>
+
+<div class="main-wrapper">
+
+    <form class="filter" method="get" th:action="@{/history/index}">
+        <table class="detail-info">
+            <tr>
+                <td>
+                    <label> Seller </label>
+                </td>
+                <td>
+                    <select name="sellerId">
+                        <option th:value="null">No Specific Seller</option>
+                        <option  th:each="option : ${sellerDropdown}"
+                                 th:value="${option.value}"
+                                 th:text="${option.textContent}"
+                                 th:selected="${option.value == sellerId}">
+                        </option>
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <label> Buyer </label>
+                </td>
+                <td>
+                    <select name="buyerId">
+                        <option th:value="null">No Specific Buyer</option>
+                        <option  th:each="option : ${buyerDropdown}"
+                                 th:value="${option.value}"
+                                 th:text="${option.textContent}"
+                                 th:selected="${option.value == buyerId}">
+                        </option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button type="submit" class="blue-button">Search</button>
+                </td>
+            </tr>
+        </table>
+
+
+    </form>
+    <table>
+        <thead>
+        <tr>
+            <th>Date</th>
+            <th>Seller</th>
+            <th>Buyer</th>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Shipment</th>
+            <th>Total Price</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="row: ${grid}" th:object="${row}">
+
+            <td th:text="*{#temporals.format(date, 'dd/MM/yyyy HH:mm')}"></td>
+            <td th:text="*{seller}"></td>
+            <td th:text="*{buyer}"></td>
+            <td th:text="*{product}"></td>
+            <td th:text="*{quantity}"></td>
+            <td th:text="*{shipper}"></td>
+            <td th:text="*{#numbers.formatCurrency(totalPrice)}"></td>
+
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+            <td colspan="7">
+                <div class="pagination">
+                    <div th:text="|page ${currentPage} of ${totalPages}|"></div>
+                    <div th:if="${totalPages != 0}">
+                        <a th:each="number : ${#numbers.sequence(1,totalPages)}"
+                           th:text="${number}"
+                           th:href="@{/history/index(page=${number})}"></a>
+                    </div>
+                    <div th:unless="${totalPages != 0}">
+                        Data not found!
+                    </div>
+                </div>
+            </td>
+        </tr>
+        </tfoot>
+    </table>
+</div>
+<footer th:replace="~{layout :: footer}">
+</footer>
+</body>
+</html>

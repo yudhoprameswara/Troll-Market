@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymleaf.org">
+<head th:replace="~{layout :: head}"></head>
+<body class="main-body">
+<div th:replace="~{layout :: nav-bar(Shop)}"></div>
+
+<div class="main-wrapper">
+
+    <form class="filter" method="get" th:action="@{/shop/index}">
+        <table class="detail-info">
+            <tr>
+                <td>
+                    <label> Name </label>
+                </td>
+                <td>
+                    <input type="text" name="name" placeholder="Name..">
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <label> Category </label>
+                </td>
+                <td>
+                    <input type="text" name="category" placeholder="category..">
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <label> Description </label>
+                </td>
+                <td>
+                    <input type="text" name="description" placeholder="description..">
+                </td>
+            </tr>
+
+
+            <tr>
+                <td>
+                    <button type="submit" class="blue-button">Search</button>
+                </td>
+            </tr>
+        </table>
+
+
+    </form>
+    <table>
+        <thead>
+        <tr>
+            <th>Action</th>
+            <th>Name</th>
+            <th>Price</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr th:each="row: ${grid}" th:object="${row}">
+            <td>
+                <a href="javascript:;"  th:attr="data-id=*{id}" class="green-button add-cart-button"><i class="fas fa-cart-plus"></i> Add to Cart</a>
+                <a href="javascript:;"  th:attr="data-id=*{id}" class="summary-button info-button"><i class="fas fa-info-circle"></i> Info</a>
+            </td>
+            <td th:text="*{name}"></td>
+            <td th:text="*{#numbers.formatCurrency(price)}"></td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+            <td colspan="3">
+                <div class="pagination">
+                    <div th:text="|page ${currentPage} of ${totalPages}|"></div>
+                    <div th:if="${totalPages != 0}">
+                        <a th:each="number : ${#numbers.sequence(1,totalPages)}"
+                           th:text="${number}"
+                           th:href="@{/shop/index(page=${number})}"></a>
+                    </div>
+                    <div th:unless="${totalPages != 0}">
+                        Data not found!
+                    </div>
+                </div>
+            </td>
+        </tr>
+        </tfoot>
+    </table>
+</div>
+<footer th:replace="~{layout :: footer}">
+</footer>
+<div class="modal-layer">
+    <th:block th:replace="~{shop/shop-popup-detail :: detailDialog}" ></th:block>
+    <th:block th:replace="~{shop/shop-popup-form :: formDialog}" ></th:block>
+</div>
+<script th:src="@{/resources/js/shop/shop-popup.js}">
+</script>
+</body>
+</html>

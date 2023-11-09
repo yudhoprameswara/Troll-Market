@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymleaf.org">
+<head th:replace="~{layout :: head}"></head>
+<body class="authentication-body">
+<div class="authentication-wrapper">
+    <header th:replace="~{layout :: account-header}"></header>
+    <main>
+        <h1>403 / ACCESS DENIED</h1>
+        <p>
+            Role anda tidak memiliki feature di halaman ini.
+            untuk mengetahui detail role yang memiliki akses, silahkan hubungi management.
+        </p>
+        <div>
+            <a th:href="@{/}">Kembali ke landing page</a>
+        </div>
+    </main>
+</div>
+</body>
+</html>

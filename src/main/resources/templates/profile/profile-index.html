@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymleaf.org">
+<head th:replace="~{layout :: head}"></head>
+<body class="main-body">
+<div th:replace="~{layout :: nav-bar(Profile)}"></div>
+
+<div class="main-wrapper">
+
+    <table class="detail-info" th:object="${detail}"  th:data-role="${#authentication.getAuthorities()}">
+
+        <tr>
+            <td>
+                <label>
+                    Name
+                </label>
+            </td>
+            <td th:text="*{name}"></td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>
+                    Role
+                </label>
+            </td>
+            <td class="role" th:text="${#authentication.getPrincipal().getAuthorities()}"></td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>
+                    Address
+                </label>
+            </td>
+            <td th:text="*{address}"></td>
+        </tr>
+
+        <tr>
+            <td>
+                <label>
+                    Balance
+                </label>
+            </td>
+            <td class="balance" th:attr="data-id=*{id}" th:text="*{#numbers.formatCurrency(balance)}"></td>
+            <td><a href="javascript:;" class="green-button-topUp top-up-button"><i class="fas fa-money-bill-wave-alt"></i> Top Up</a></td>
+        </tr>
+
+    </table>
+    <table>
+        <thead>
+        <tr>
+            <th>Date</th>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Shipment</th>
+            <th>Total Price</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="row: ${grid}" th:object="${row}">
+
+            <td th:text="*{#temporals.format(date, 'dd/MM/yyyy HH:mm')}"></td>
+            <td th:text="*{product}"></td>
+            <td th:text="*{quantity}"></td>
+            <td th:text="*{shipment}"></td>
+            <td th:text="*{#numbers.formatCurrency(totalPrice)}"></td>
+
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+            <td colspan="5">
+                <div class="pagination">
+                    <div th:text="|page ${currentPage} of ${totalPages}|"></div>
+                    <div th:if="${totalPages != 0}">
+                        <a th:each="number : ${#numbers.sequence(1,totalPages)}"
+                           th:text="${number}"
+                           th:href="@{/profile/index(page=${number})}"></a>
+                    </div>
+                    <div th:unless="${totalPages != 0}">
+                        Data not found!
+                    </div>
+                </div>
+            </td>
+        </tr>
+        </tfoot>
+    </table>
+</div>
+<footer th:replace="~{layout :: footer}">
+</footer>
+<div class="modal-layer">
+    <th:block th:replace="~{profile/profile-popup-form :: formDialog}" ></th:block>
+    <!--    <th:block th:replace="~{book/book-delete-popup :: deleteDialog}" ></th:block>-->
+</div>
+<script th:src="@{/resources/js/profile/profile-popup.js}">
+</script>
+</body>
+</html>

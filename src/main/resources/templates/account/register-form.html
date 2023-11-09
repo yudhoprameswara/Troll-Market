@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymleaf.org">
+<head th:replace="~{layout :: head}"></head>
+<body class="authentication-body">
+<div class="authentication-wrapper">
+
+    <main>
+        <h1>Register Form</h1>
+        <form method="post" th:action="@{/account/register}" th:object="${dto}">
+
+
+            <input type="hidden" name="role"  th:value="${role}">
+            <input type="hidden" name="balance" th:value="0">
+            <table>
+                <tr>
+                    <td>
+                        <label> Username </label>
+                    </td>
+                    <td><input th:field="*{username}" type="text" placeholder="Username">
+                        <div class="field-validation-error" th:errors="*{username}"></div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label> Password</label>
+                    </td>
+                    <td>
+                        <input th:field="*{password}" type="password" placeholder="Password">
+                        <div class="field-validation-error" th:errors="*{password}"></div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label> Confirm Password</label>
+                    </td>
+                    <td>
+                        <input th:field="*{passwordConfirmation}" type="password" placeholder="Confirm Password">
+                        <div class="field-validation-error" th:errors="*{passwordConfirmation}"></div>
+                        <div class="field-validation-error" th:errors="${dto}"></div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label>Name</label>
+                    </td>
+                    <td>
+                        <input th:field="*{name}" type="text" name="name" placeholder="Name">
+                        <div class="field-validation-error" th:errors="*{name}"></div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label> Address</label>
+                    </td>
+                    <td>
+                        <textarea th:field="*{address}" placeholder="Address"></textarea>
+                    </td>
+                </tr>
+            </table>
+            <button type="submit">Sign Up</button>
+            <a th:href="@{/account/loginForm}">Back to Login Page</a>
+        </form>
+    </main>
+</div>
+
+</body>
+</html>

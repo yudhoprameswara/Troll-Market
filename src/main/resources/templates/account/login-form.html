@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymleaf.org">
+<head th:replace="~{layout :: head}"></head>
+<body class="authentication-body">
+<div class="authentication-wrapper">
+    <header th:replace="~{layout :: account-header}"></header>
+    <main>
+        <h1>Sign In</h1>
+        <form method="post" th:action="@{/authenticating}">
+            <input type="text" name="username" placeholder="username" autocomplete="off">
+            <input type="password" name="password" placeholder="password">
+             <button type="submit">Sign In</button>
+        </form>
+        <div class="link-container">
+            <a th:href="@{/account/registerFormBuyer}">Register as Buyer</a>
+            <a th:href="@{/account/registerFormSeller}">Register as Seller</a>
+        </div>
+    </main>
+</div>
+</body>
+</html>

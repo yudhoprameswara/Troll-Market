@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymleaf.org">
+<head th:replace="~{layout :: head}"></head>
+<body class="main-body">
+<div th:replace="~{layout :: nav-bar(Merchandise)}"></div>
+
+<div class="main-wrapper">
+
+    <div class="create-container">
+        <a th:href="@{/merchandise/upsertForm}" class="create-button">
+            <i class="fas fa-plus-circle"></i> Add new Product</a>
+    </div>
+    <table>
+        <thead>
+        <tr>
+            <th>Action</th>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Discontinue</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="row: ${grid}" th:object="${row}">
+            <td class="merchandise-button ">
+                <a th:href="@{/merchandise/upsertForm(id=*{id})}"   class="edit-button" ><i class="fas fa-edit"></i> Edit</a>
+                <a th:href="@{/merchandise/delete(id=*{id})}"  class="delete-button"><i class="fas fa-eraser"></i> Delete</a>
+                <a href="javascript:;"  th:attr="data-id=*{id}" class="summary-button info-button"><i class="fas fa-info-circle"></i> Info</a>
+                <a th:if="*{discontinue.equals('No') }" th:href="@{/merchandise/discontinue(id=*{id})}"  class="books-button "><i class="fas fa-stop-circle"></i> Discontinue</a>
+            </td>
+            <td th:text="*{name}"></td>
+            <td th:text="*{category}"></td>
+            <td th:text="*{discontinue}"></td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+            <td colspan="4">
+                <div class="pagination">
+                    <div th:text="|page ${currentPage} of ${totalPages}|"></div>
+                    <div th:if="${totalPages != 0}">
+                        <a th:each="number : ${#numbers.sequence(1,totalPages)}"
+                           th:text="${number}"
+                           th:href="@{/merchandise/index(page=${number})}"></a>
+                    </div>
+                    <div th:unless="${totalPages != 0}">
+                        Data not found!
+                    </div>
+                </div>
+            </td>
+        </tr>
+        </tfoot>
+    </table>
+</div>
+<footer th:replace="~{layout :: footer}">
+</footer>
+<div class="modal-layer">
+    <th:block th:replace="~{merchandise/merchandise-popup-detail :: detailDialog}" ></th:block>
+</div>
+<script th:src="@{/resources/js/merchandise/merchandise-popup.js}">
+</script>
+</body>
+</html>

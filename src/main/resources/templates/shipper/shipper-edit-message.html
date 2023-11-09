@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymleaf.org">
+<head th:replace="~{layout :: head}"></head>
+<body class="main-body">
+<div th:replace="~{layout :: nav-bar(Error)}"></div>
+
+<div class="main-wrapper">
+    <h3>Failed to edit/delete Shipper</h3>
+    <span>failed to delete shipper because</span>
+    <span>there were <span th:text="${dependencies}"></span> service in the transaction</span>
+    <span>Enjoy your life!</span>
+</div>
+
+<footer th:replace="~{layout :: footer}"></footer>
+</body>
+</html>
