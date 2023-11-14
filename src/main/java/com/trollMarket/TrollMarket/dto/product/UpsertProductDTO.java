@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 @Getter
 @Setter
@@ -20,4 +21,6 @@ public class UpsertProductDTO {
     private String description;
     private Double price;
     private Boolean discontinue;
+    private MultipartFile image;
+    private String imagePath;
 }

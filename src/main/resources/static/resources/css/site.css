@@ -467,3 +467,68 @@ div.popup-dialog--opened{
 .hidden{
     display: none;
 }
+.grid-tiles{
+    padding: 50px;
+}
+.grid-tiles .filter{
+    background-color: #ffffff;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.grid-tiles .create-button{
+    margin-bottom:15px;
+    margin-left:0;
+}
+.grid-tiles .tiles-container{
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(2, 350px);
+}
+.grid-tiles .tile{
+  background-color: #f6f6f6;
+      border-radius: 6px;
+      padding: 15px;
+      overflow: auto;
+      border: solid #00000017 0.5px;
+
+}
+
+.grid-tiles .tile .image-container{
+    background-color: black;
+    height: 145px;
+    text-align: center;
+    overflow: hidden;
+}
+
+.grid-tiles .tile img{
+    height: 150px;
+}
+
+.grid-tiles .pagination{
+    padding: 20px;
+}
+
+.tile .name{
+    padding: 15px;
+}
+
+.tile .price, .tile .description{
+    padding: 15px 0;
+}
+
+.tile{
+    text-align: center;
+}
+
+.tiles-container :hover{
+    background: #ececec;
+}
+
+.grid-tiles .filter div{
+    padding-right: 20px;
+}

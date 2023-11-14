@@ -13,4 +13,6 @@ public class ShopListProductDTO {
     private Long id;
     private String name;
     private Double price;
+    private String imagePath;
+    private String description;
 }

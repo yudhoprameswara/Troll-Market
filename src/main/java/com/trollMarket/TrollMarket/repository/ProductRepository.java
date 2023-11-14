@@ -34,7 +34,9 @@ public interface ProductRepository extends JpaRepository<Product,Long> {
             SELECT new com.trollMarket.TrollMarket.dto.product.ShopListProductDTO(
             pro.id,
             pro.name,
-            pro.price)
+            pro.price,
+            pro.imagePath,
+            pro.description)
             FROM Product AS pro
             WHERE  pro.discontinue = false 
             AND
@@ -62,4 +64,12 @@ public interface ProductRepository extends JpaRepository<Product,Long> {
             WHERE pro.id = :id
             """)
     public ProductDetailDTO getProductDetail(@Param("id") Long id);
+
+    @Query("""
+            SELECT pro.imagePath
+            FROM Product AS pro
+            WHERE pro.id = :id
+            """)
+    public String getImagePath(@Param("id") Long id);
+
 }

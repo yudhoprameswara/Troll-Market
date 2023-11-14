@@ -36,5 +36,7 @@ public class Product {
     @Column(name = "Discontinue")
     private Boolean discontinue;
 
+    @Column(name = "ImagePath")
+    private String imagePath;
 
 }

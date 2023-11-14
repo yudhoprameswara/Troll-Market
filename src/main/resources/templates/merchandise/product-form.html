@@ -5,8 +5,9 @@
 <div th:replace="~{layout :: nav-bar(AddProduct)}"></div>
 <div class="main-wrapper">
 
-    <form class="upsert-form" method="post" th:action="@{/merchandise/upsert}" th:object="${dto}">
+    <form class="upsert-form" method="post" th:action="@{/merchandise/upsert}" th:object="${dto}" enctype="multipart/form-data">
         <input type="hidden" th:field="*{id}">
+        <input type="hidden" th:field="*{imagePath}">
         <table class="form-table">
             <tbody>
             <tr>
@@ -56,6 +57,13 @@
                 </td>
                 <td>
                     <input type="checkbox" th:field="*{discontinue}"  name="discontinue" th:value="true">
+                </td>
+            </tr>
+
+            <tr>
+                <td><label>Photo*</label></td>
+                <td>
+                    <input type="file" th:field="*{image}" accept="image/jpg">
                 </td>
             </tr>
 

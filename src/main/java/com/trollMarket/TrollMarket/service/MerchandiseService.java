@@ -8,6 +8,7 @@ import com.trollMarket.TrollMarket.repository.AccountRepository;
 import com.trollMarket.TrollMarket.repository.ProductRepository;
 import com.trollMarket.TrollMarket.repository.PurchaseRepository;
 import com.trollMarket.TrollMarket.repository.SellerRepository;
+import com.trollMarket.TrollMarket.utility.FileHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -42,15 +43,15 @@ public class MerchandiseService {
     }
     public UpsertProductDTO findOne(Long id){
         var entity = productRepository.findById(id).get();
-        var dto = new UpsertProductDTO(
-                entity.getId(),
-                entity.getName(),
-                entity.getSellerId(),
-                entity.getCategory(),
-                entity.getDescription(),
-                entity.getPrice(),
-                entity.getDiscontinue()
-        );
+        var dto = new UpsertProductDTO();
+              dto.setId(entity.getId());
+                dto.setName(entity.getName());
+                dto.setSellerId(entity.getSellerId());
+                dto.setCategory(entity.getCategory());
+                dto.setDescription(entity.getDescription());
+                dto.setPrice(entity.getPrice());
+                dto.setDiscontinue(entity.getDiscontinue());
+                dto.setImagePath(entity.getImagePath());
         return dto;
     }
 
@@ -63,7 +64,24 @@ public class MerchandiseService {
         entity.setDescription(dto.getDescription());
         entity.setPrice(dto.getPrice());
         entity.setDiscontinue(dto.getDiscontinue());
+        entity.setImagePath(dto.getImagePath());
         productRepository.save(entity);
+    }
+
+    public void imageFileHandler(UpsertProductDTO dto){
+        var multipartFile = dto.getImage();
+        var isMultipartEmpty = multipartFile.isEmpty();
+        var imagePath = ((dto.getImagePath() == null || dto.getImagePath().equals(""))
+                && isMultipartEmpty) ? null : dto.getImagePath();
+        try{
+            if(!isMultipartEmpty){
+                imagePath = FileHelper.uploadProductPhoto(imagePath, multipartFile);
+            }
+            dto.setImagePath(imagePath);
+
+        } catch (Exception exception){
+            System.out.println("eh kena");
+        }
     }
 
     public Long getCountProductByTransaction(Long productId){
@@ -71,6 +89,9 @@ public class MerchandiseService {
     }
 
     public void delete(Long id){
+
+        String imagePath = productRepository.getImagePath(id);
+        FileHelper.deleteProductPhoto(imagePath);
         productRepository.deleteById(id);
     }
 

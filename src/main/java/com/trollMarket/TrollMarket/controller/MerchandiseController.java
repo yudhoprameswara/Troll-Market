@@ -54,6 +54,7 @@ public class MerchandiseController {
     public String upsert(@Valid @ModelAttribute("dto") UpsertProductDTO dto, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model){
 
         if(!bindingResult.hasErrors()){
+            service.imageFileHandler(dto);
             service.save(dto);
             redirectAttributes.addAttribute("username",service.getUsernameBySellerId(dto.getSellerId()));
             return "redirect:/merchandise/index";

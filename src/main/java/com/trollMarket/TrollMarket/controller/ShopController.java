@@ -33,7 +33,7 @@ public class ShopController extends AbstractRestController {
         model.addAttribute("totalPages", rows.getTotalPages());
         model.addAttribute("currentPage", page);
         model.addAttribute("shipperDropdown",shipperDropdown);
-        return "shop/shop-index";
+        return "shop-updated/shop-updated-index";
     }
 
     @GetMapping("/detail/{id}")
